@@ -2,14 +2,14 @@
   "development": {
     "username": "docker",
     "password": "docker",
-    "database": "ceu",
+    "database": "komkordik",
     "host": "db",
     "dialect": "postgres"
   },
   "test": {
     "username": "docker",
     "password": "docker",
-    "database": "ceu_test",
+    "database": "komkordik_test",
     "host": "db",
     "dialect": "localhost"
   },

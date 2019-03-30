@@ -181,7 +181,7 @@ exports.userPhotoUpload = function userPhotoUpload(req, res) {
     const fileId = user.userPhotoFileId ? user.userPhotoFileId : shortid.generate();
     const fileKey = `users/${userId}/photos/${fileId}.jpg`;
     s3.putObject({
-      Bucket: 'ceufkumifiles',
+      Bucket: 'komkordikfkumifiles',
       Key: fileKey,
       Body: base64data,
       ACL: 'public-read',

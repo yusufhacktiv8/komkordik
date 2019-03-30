@@ -1,5 +1,5 @@
 {
-  "name": "ceu",
+  "name": "komkordik",
   "version": "0.0.1",
   "description": "Clinical Education Unit for Universitas Muslim Indonesia",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yusufhacktiv8/ceu.git"
+    "url": "git+https://github.com/yusufhacktiv8/komkordik.git"
   },
   "author": "Yusuf",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yusufhacktiv8/ceu/issues"
+    "url": "https://github.com/yusufhacktiv8/komkordik/issues"
   },
-  "homepage": "https://github.com/yusufhacktiv8/ceu#readme",
+  "homepage": "https://github.com/yusufhacktiv8/komkordik#readme",
   "dependencies": {
     "aws-sdk": "^2.391.0",
     "axios": "^0.18.0",
