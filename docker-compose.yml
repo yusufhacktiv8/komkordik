@@ -1,0 +1,43 @@
+version: '2'
+services:
+  db:
+    build: ./db
+    volumes:
+      - ./db/pgdata:/pgdata
+    ports:
+      - "6543:5432"
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=komkordik
+      - PGDATA=/pgdata
+
+  api:
+    build:
+      context: ./api
+      args:
+        app_env: ${APP_ENV}
+        port_env: ${PORT_ENV}
+        token_password_env: ${TOKEN_PASSWORD_ENV}
+        aws_access_key_id_env: ${AWS_ACCESS_KEY_ID_ENV}
+        aws_secret_access_key_env: ${AWS_SECRET_ACCESS_KEY_ENV}
+
+    volumes:
+      - ./api:/api
+
+    ports:
+      - "8080:8080"
+    links:
+      - db
+
+  admin:
+    build:
+      context: ./admin
+      args:
+        app_env: ${APP_ENV}
+        server_url_env: ${SERVER_URL_ENV}
+        files_url_env: ${FILES_URL_ENV}
+    volumes:
+      - ./admin/src:/admin/src
+    ports:
+      - "3000:3000"
