@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var usersByRole = require('./routes/users_by_role');
 var changePassword = require('./routes/change_password');
 var roles = require('./routes/roles');
+var security = require('./routes/security');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/users', users);
 app.use('/api/usersbyrole', usersByRole);
 app.use('/api/changepassword', changePassword);
 app.use('/api/roles', roles);
+app.use('/api/security', security);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

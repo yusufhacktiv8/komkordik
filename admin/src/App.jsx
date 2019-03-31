@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 
 import './App.css';
 import Workspace from './workspace/Workspace';
+import LoginForm from './login/LoginForm';
 
 const parseJwt = (token) => {
   const base64Url = token.split('.')[1];
@@ -13,9 +14,10 @@ const parseJwt = (token) => {
 
 const App = () => {
   const token = window.sessionStorage.getItem('token');
+  console.log('--------> token: ', token);
   if (token) {
     const { role } = parseJwt(token);
-    if (role === 'KOMKORDIK') {
+    if (role === 'ADMIN') {
       return (
         <div className="App">
           <Route path="/" component={Workspace} />
