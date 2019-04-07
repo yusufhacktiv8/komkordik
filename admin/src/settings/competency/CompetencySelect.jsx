@@ -4,7 +4,7 @@ import axios from 'axios';
 import showError from '../../utils/ShowError';
 
 const Option = Select.Option;
-const ROLES_URL = `${process.env.REACT_APP_SERVER_URL}/api/roles`;
+const COMPETENCIES_URL = `${process.env.REACT_APP_SERVER_URL}/api/competencies`;
 
 class CompetencySelect extends Component {
   constructor(props) {
@@ -13,12 +13,12 @@ class CompetencySelect extends Component {
     const value = this.props.value;
     this.state = {
       value,
-      roles: [],
+      competencies: [],
     };
   }
 
   componentDidMount() {
-    this.fetchRoles();
+    this.fetchCompetencies();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,15 +28,15 @@ class CompetencySelect extends Component {
     }
   }
 
-  fetchRoles() {
-    axios.get(ROLES_URL, { params: {
+  fetchCompetencies() {
+    axios.get(COMPETENCIES_URL, { params: {
       searchText: '',
       start: 0,
       count: 100,
     } })
       .then((response) => {
         this.setState({
-          roles: response.data.rows,
+          competencies: response.data.rows,
         });
       })
       .catch((error) => {
@@ -61,12 +61,12 @@ class CompetencySelect extends Component {
   render() {
     return (
       <Select
-        placeholder="Select Role"
+        placeholder="Select Competency"
         onChange={this.handleChange}
         value={this.state.value}
       >
-        {this.state.roles.map(role => (
-          <Option key={role.id} value={role.id}>{role.name}</Option>
+        {this.state.competencies.map(competency => (
+          <Option key={competency.id} value={competency.id}>{competency.name}</Option>
         ))}
       </Select>
     );

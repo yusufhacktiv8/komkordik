@@ -3,7 +3,7 @@ import { Modal, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import showError from '../../utils/ShowError';
 
-const ROLES_URL = `${process.env.REACT_APP_SERVER_URL}/api/roles`;
+const COMPETENCIES_URL = `${process.env.REACT_APP_SERVER_URL}/api/competencies`;
 
 const FormItem = Form.Item;
 
@@ -13,7 +13,7 @@ class CompetencyWindow extends Component {
   }
 
   onSave = () => {
-    const { role, onSaveSuccess, form } = this.props;
+    const { competency, onSaveSuccess, form } = this.props;
     form.validateFields((err, values) => {
       if (err) {
         return;
@@ -21,10 +21,10 @@ class CompetencyWindow extends Component {
       this.setState({
         saving: true,
       }, () => {
-        const roleId = role.id;
-        const axiosObj = roleId ? axios.put(`${ROLES_URL}/${roleId}`, values) : axios.post(ROLES_URL, values);
+        const competencyId = competency.id;
+        const axiosObj = competencyId ? axios.put(`${COMPETENCIES_URL}/${competencyId}`, values) : axios.post(COMPETENCIES_URL, values);
         axiosObj.then(() => {
-          message.success('Saving role success');
+          message.success('Saving competency success');
           this.setState({
             saving: false,
           }, () => {
@@ -43,12 +43,12 @@ class CompetencyWindow extends Component {
 
   render() {
     const { saving } = this.state;
-    const { visible, onCancel, form, role } = this.props;
+    const { visible, onCancel, form, competency } = this.props;
     const { getFieldDecorator } = form;
     return (
       <Modal
         visible={visible}
-        title="Role"
+        title="Competency"
         okText="Save"
         footer={[
           <Button key="cancel" onClick={onCancel}>Cancel</Button>,
@@ -60,7 +60,7 @@ class CompetencyWindow extends Component {
         <Form layout="vertical">
           <FormItem label="Code">
             {getFieldDecorator('code', {
-              initialValue: role.code,
+              initialValue: competency.code,
               rules: [
                 { required: true, message: 'Please input code' },
               ],
@@ -70,7 +70,7 @@ class CompetencyWindow extends Component {
           </FormItem>
           <FormItem label="Name">
             {getFieldDecorator('name', {
-              initialValue: role.name,
+              initialValue: competency.name,
               rules: [
                 { required: true, message: 'Please input name' },
               ],

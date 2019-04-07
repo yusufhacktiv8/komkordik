@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Table, Button, Input, Row, Col, message, Popconfirm } from 'antd';
 import showError from '../../utils/ShowError';
-import RoleWindow from './CompetencyWindow';
+import CompetencyWindow from './CompetencyWindow';
 
-const ROLES_URL = `${process.env.REACT_APP_SERVER_URL}/api/roles`;
+const COMPETENCIES_URL = `${process.env.REACT_APP_SERVER_URL}/api/competencies`;
 const Column = Table.Column;
 
 class CompetencyList extends Component {
   state = {
     searchText: '',
-    role: {},
-    roles: [],
+    competency: {},
+    competencies: [],
     loading: false,
     count: 0,
     currentPage: 1,
     pageSize: 10,
-    roleWindowVisible: false,
+    competencyWindowVisible: false,
   }
   componentDidMount() {
-    this.fetchRoles();
+    this.fetchCompetencys();
   }
 
   onSearchChange = (e) => {
@@ -30,21 +30,21 @@ class CompetencyList extends Component {
 
   onSaveSuccess = () => {
     this.closeEditWindow();
-    this.fetchRoles();
+    this.fetchCompetencys();
   }
 
-  fetchRoles() {
+  fetchCompetencys() {
     this.setState({
       loading: true,
     });
-    axios.get(ROLES_URL, { params: {
+    axios.get(COMPETENCIES_URL, { params: {
       searchText: this.state.searchText,
       currentPage: this.state.currentPage,
       pageSize: this.state.pageSize,
     } })
       .then((response) => {
         this.setState({
-          roles: response.data.rows,
+          competencies: response.data.rows,
           count: response.data.count,
           loading: false,
         });
@@ -59,18 +59,18 @@ class CompetencyList extends Component {
       });
   }
 
-  filterRoles = () => {
+  filterCompetencys = () => {
     this.setState({
       currentPage: 1,
-    }, () => { this.fetchRoles(); });
+    }, () => { this.fetchCompetencys(); });
   }
 
-  deleteRole(role) {
+  deleteCompetency(competency) {
     const hide = message.loading('Action in progress..', 0);
-    axios.delete(`${ROLES_URL}/${role.id}`)
+    axios.delete(`${COMPETENCIES_URL}/${competency.id}`)
       .then(() => {
-        message.success('Delete role success');
-        this.fetchRoles();
+        message.success('Delete competency success');
+        this.fetchCompetencys();
       })
       .catch((error) => {
         showError(error);
@@ -82,16 +82,16 @@ class CompetencyList extends Component {
 
   openEditWindow = (record) => {
     this.setState({
-      role: record,
-      roleWindowVisible: true,
+      competency: record,
+      competencyWindowVisible: true,
     }, () => {
-      this.roleWindow.resetFields();
+      this.competencyWindow.resetFields();
     });
   }
 
   closeEditWindow = () => {
     this.setState({
-      roleWindowVisible: false,
+      competencyWindowVisible: false,
     });
   }
 
@@ -99,7 +99,7 @@ class CompetencyList extends Component {
     const page = pagination.current;
     this.setState({
       currentPage: page,
-    }, () => { this.fetchRoles(); });
+    }, () => { this.fetchCompetencys(); });
   }
 
   render() {
@@ -119,7 +119,7 @@ class CompetencyList extends Component {
               <Button
                 shape="circle"
                 icon="search"
-                onClick={this.filterRoles}
+                onClick={this.filterCompetencys}
                 style={{ marginRight: 15 }}
               />
               <Button
@@ -134,7 +134,7 @@ class CompetencyList extends Component {
         <Row>
           <Col span={24}>
             <Table
-              dataSource={this.state.roles}
+              dataSource={this.state.competencies}
               style={{ marginTop: 20 }}
               rowKey="id"
               loading={this.state.loading}
@@ -190,8 +190,8 @@ class CompetencyList extends Component {
                       style={{ marginRight: 5 }}
                     />
                     <Popconfirm
-                      title={`Are you sure delete role ${record.name}`}
-                      onConfirm={() => this.deleteRole(record)}
+                      title={`Are you sure delete competency ${record.name}`}
+                      onConfirm={() => this.deleteCompetency(record)}
                       okText="Yes" cancelText="No"
                     >
                       <Button
@@ -207,13 +207,13 @@ class CompetencyList extends Component {
           </Col>
         </Row>
 
-        <RoleWindow
-          visible={this.state.roleWindowVisible}
+        <CompetencyWindow
+          visible={this.state.competencyWindowVisible}
           onSaveSuccess={this.onSaveSuccess}
           onCancel={this.closeEditWindow}
           onClose={this.closeEditWindow}
-          role={this.state.role}
-          ref={roleWindow => (this.roleWindow = roleWindow)}
+          competency={this.state.competency}
+          ref={competencyWindow => (this.competencyWindow = competencyWindow)}
         />
       </div>
     );
