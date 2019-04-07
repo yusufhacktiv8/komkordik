@@ -11,7 +11,7 @@ export default class Chart1 extends Component {
   }
 
   componentDidMount() {
-    this.fetchDepartments();
+    // this.fetchDepartments();
   }
 
   fetchDepartments() {

@@ -12,7 +12,7 @@ export default class StudentStatusCountChart extends Component {
   }
 
   componentDidMount() {
-    this.fetchDepartments();
+    // this.fetchDepartments();
   }
 
   fetchDepartments() {

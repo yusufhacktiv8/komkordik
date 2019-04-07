@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Route, Link } from 'react-router-dom';
 import RolePage from '../role/RolePage';
 import UserPage from '../user/UserPage';
+import DepartmentPage from '../settings/department/DepartmentPage';
+import CompetencyPage from '../settings/competency/CompetencyPage';
 
 import DashboardPage from '../dashboard/DashboardPage';
 
@@ -57,6 +59,10 @@ class Workspace extends Component {
       selectedKeys = ['roles'];
     } else if (location.includes('users')) {
       selectedKeys = ['users'];
+    } else if (location.includes('departments') && !location.includes('hospitals')) {
+      selectedKeys = ['departments'];
+    } else if (location.includes('competencies')) {
+      selectedKeys = ['competencies'];
     }
     return (
       <Layout style={{ height: '100%' }}>
@@ -165,6 +171,9 @@ class Workspace extends Component {
                     <Menu.Item key="departments">
                       <Link to="/departments">Departments</Link>
                     </Menu.Item>
+                    <Menu.Item key="competencies">
+                      <Link to="/competencies">Competencies</Link>
+                    </Menu.Item>
                   </MenuItemGroup>
                 </SubMenu>
               </Menu>
@@ -176,6 +185,8 @@ class Workspace extends Component {
             <Route exact path="/" component={DashboardPage} />
             <Route path="/roles" component={RolePage} />
             <Route path="/users" component={UserPage} />
+            <Route path="/departments" component={DepartmentPage} />
+            <Route path="/competencies" component={CompetencyPage} />
           </div>
         </Content>
       </Layout>
