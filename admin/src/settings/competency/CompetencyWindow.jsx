@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import showError from '../../utils/ShowError';
+import DepartmentSelect from '../../settings/department/DepartmentSelect';
 
 const COMPETENCIES_URL = `${process.env.REACT_APP_SERVER_URL}/api/competencies`;
 
@@ -10,7 +11,7 @@ const FormItem = Form.Item;
 class CompetencyWindow extends Component {
   state = {
     saving: false,
-  }
+  };
 
   onSave = () => {
     const { competency, onSaveSuccess, form } = this.props;
@@ -39,7 +40,7 @@ class CompetencyWindow extends Component {
           });
       });
     });
-  }
+  };
 
   render() {
     const { saving } = this.state;
@@ -76,6 +77,16 @@ class CompetencyWindow extends Component {
               ],
             })(
               <Input maxLength="50" />,
+            )}
+          </FormItem>
+          <FormItem label="Department">
+            {getFieldDecorator('department', {
+              initialValue: competency.Department ? String(competency.Department.id) : undefined,
+              rules: [
+                { required: true, message: 'Please input department' },
+              ],
+            })(
+              <DepartmentSelect level={-1} />,
             )}
           </FormItem>
         </Form>

@@ -19,7 +19,7 @@ class CompetencyList extends Component {
     competencyWindowVisible: false,
   }
   componentDidMount() {
-    this.fetchCompetencys();
+    this.fetchCompetencies();
   }
 
   onSearchChange = (e) => {
@@ -30,10 +30,10 @@ class CompetencyList extends Component {
 
   onSaveSuccess = () => {
     this.closeEditWindow();
-    this.fetchCompetencys();
+    this.fetchCompetencies();
   }
 
-  fetchCompetencys() {
+  fetchCompetencies() {
     this.setState({
       loading: true,
     });
@@ -62,7 +62,7 @@ class CompetencyList extends Component {
   filterCompetencys = () => {
     this.setState({
       currentPage: 1,
-    }, () => { this.fetchCompetencys(); });
+    }, () => { this.fetchCompetencies(); });
   }
 
   deleteCompetency(competency) {
@@ -70,7 +70,7 @@ class CompetencyList extends Component {
     axios.delete(`${COMPETENCIES_URL}/${competency.id}`)
       .then(() => {
         message.success('Delete competency success');
-        this.fetchCompetencys();
+        this.fetchCompetencies();
       })
       .catch((error) => {
         showError(error);
@@ -99,7 +99,7 @@ class CompetencyList extends Component {
     const page = pagination.current;
     this.setState({
       currentPage: page,
-    }, () => { this.fetchCompetencys(); });
+    }, () => { this.fetchCompetencies(); });
   }
 
   render() {
@@ -177,6 +177,11 @@ class CompetencyList extends Component {
                     </span>
                   );
                 }}
+              />
+              <Column
+                title="Department"
+                dataIndex="Department.name"
+                key="department"
               />
               <Column
                 title="Action"

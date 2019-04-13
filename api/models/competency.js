@@ -11,5 +11,9 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
+  Competency.associate = function (models) {
+    Competency.belongsTo(models.Department, { onDelete: 'restrict' });
+  };
+
   return Competency;
 };

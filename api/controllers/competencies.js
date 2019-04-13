@@ -16,11 +16,14 @@ exports.findAll = function findAll(req, res) {
         { name: { $ilike: searchText } },
       ],
     },
+    include: [
+      { model: models.Department },
+    ],
     limit,
     offset,
   })
-  .then((roles) => {
-    res.json(roles);
+  .then((competencys) => {
+    res.json(competencys);
   })
   .catch((err) => {
     sendError(err, res);
@@ -29,10 +32,10 @@ exports.findAll = function findAll(req, res) {
 
 exports.findOne = function findOne(req, res) {
   models.Competency.findOne({
-    where: { id: req.params.roleId },
+    where: { id: req.params.competencyId },
   })
-  .then((role) => {
-    res.json(role);
+  .then((competency) => {
+    res.json(competency);
   })
   .catch((err) => {
     sendError(err, res);
@@ -40,10 +43,12 @@ exports.findOne = function findOne(req, res) {
 };
 
 exports.create = function create(req, res) {
-  const roleForm = req.body;
-  models.Competency.create(roleForm)
-  .then((role) => {
-    res.json(role);
+  const competencyForm = req.body;
+  const departmentId = parseInt(competencyForm.department, 10);
+  competencyForm.DepartmentId = departmentId;
+  models.Competency.create(competencyForm)
+  .then((competency) => {
+    res.json(competency);
   })
   .catch((err) => {
     sendError(err, res);
@@ -51,11 +56,13 @@ exports.create = function create(req, res) {
 };
 
 exports.update = function update(req, res) {
-  const roleForm = req.body;
+  const competencyForm = req.body;
+  const departmentId = parseInt(competencyForm.department, 10);
+  competencyForm.DepartmentId = departmentId;
   models.Competency.update(
-    roleForm,
+    competencyForm,
     {
-      where: { id: req.params.roleId },
+      where: { id: req.params.competencyId },
     })
   .then((result) => {
     res.json(result);
@@ -68,7 +75,7 @@ exports.update = function update(req, res) {
 exports.destroy = function destroy(req, res) {
   models.Competency.destroy(
     {
-      where: { id: req.params.roleId },
+      where: { id: req.params.competencyId },
     })
   .then((result) => {
     res.json(result);
