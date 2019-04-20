@@ -30,6 +30,22 @@ exports.findAll = function findAll(req, res) {
   });
 };
 
+exports.all = (req, res) => {
+  models.Competency.findAll({
+    where: {},
+    order: ['name'],
+    include: [
+      { model: models.Department },
+    ],
+  })
+      .then((departments) => {
+        res.json(departments);
+      })
+      .catch((err) => {
+        sendError(err, res);
+      });
+};
+
 exports.findOne = function findOne(req, res) {
   models.Competency.findOne({
     where: { id: req.params.competencyId },

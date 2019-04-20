@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Select } from 'antd';
+import { Cascader } from 'antd';
+import _ from 'lodash';
 import axios from 'axios';
 import showError from '../../utils/ShowError';
 
-const Option = Select.Option;
-const COMPETENCIES_URL = `${process.env.REACT_APP_SERVER_URL}/api/competencies`;
+const COMPETENCIES_URL = `${process.env.REACT_APP_SERVER_URL}/api/allcompetencies`;
 
-class CompetencySelect extends Component {
+class CompetencyCascader extends Component {
   constructor(props) {
     super(props);
 
@@ -35,8 +35,23 @@ class CompetencySelect extends Component {
       count: 100,
     } })
       .then((response) => {
+        const rows = response.data;
+        const grouped = _.groupBy(rows, 'DepartmentId');
+        console.log(grouped);
+        const competencies = _.map(grouped, ((value, key) => {
+          return {
+            value: key,
+            label: value[0].Department.name,
+            children: value.map((val) => {
+              return {
+                value: val.id,
+                label: val.name,
+              };
+            }),
+          };
+        }));
         this.setState({
-          competencies: response.data.rows,
+          competencies,
         });
       })
       .catch((error) => {
@@ -60,17 +75,14 @@ class CompetencySelect extends Component {
 
   render() {
     return (
-      <Select
+      <Cascader
         placeholder="Select Competency"
         onChange={this.handleChange}
         value={this.state.value}
-      >
-        {this.state.competencies.map(competency => (
-          <Option key={competency.id} value={competency.id}>{competency.name}</Option>
-        ))}
-      </Select>
+        options={this.state.competencies}
+      />
     );
   }
 }
 
-export default CompetencySelect;
+export default CompetencyCascader;
