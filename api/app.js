@@ -17,6 +17,7 @@ var departments = require('./routes/department');
 var departmentsAll = require('./routes/department_all');
 var competencies = require('./routes/competency');
 var competenciesAll = require('./routes/competency_all');
+var hospitalCompetencies = require('./routes/hospitalcompetency');
 
 var app = express();
 
@@ -44,6 +45,8 @@ app.use('/api/departments', departments);
 app.use('/api/alldepartments', departmentsAll);
 app.use('/api/competencies', competencies);
 app.use('/api/allcompetencies', competenciesAll);
+app.use('/api/hospitalcompetencies', hospitalCompetencies);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
